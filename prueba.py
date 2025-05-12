@@ -303,14 +303,14 @@ st.plotly_chart(fig, use_container_width=True)
 # Información adicional fuera del contenedor
 st.markdown("""
     <div style='line-height: 1.6; font-size: 20px;'>
-        <p>Este mapa de calor muestra la distribución geográfica de las tasas de mortalidad relacionadas con drogas en los diferentes estados de EE.UU.</p>
+        <p>Este mapa de calor interactivo permite visualizar la distribución geográfica de las tasas de mortalidad relacionadas con drogas en los diferentes estados de EE.UU. a lo largo del periodo 1999-2015. Usa el deslizador para explorar cómo han cambiado las tasas en cada estado con el tiempo.</p>
         <h4 style='color: #1d1d1f; margin-top: 15px;'>Observaciones clave:</h4>
         <ul>
-            <li><strong>Concentración en el noreste:</strong> Estados como West Virginia, Ohio y Pennsylvania muestran tasas más altas.</li>
-            <li><strong>Patrón regional:</strong> Se observa un "corredor de alta mortalidad" desde los Apalaches hasta Nueva Inglaterra.</li>
-            <li><strong>Variabilidad estatal:</strong> Las diferencias entre estados pueden alcanzar hasta 5 veces en tasas de mortalidad.</li>
+            <li><strong>Concentración en el noreste:</strong> Estados como West Virginia, Ohio y Pennsylvania muestran tasas más altas en varios años.</li>
+            <li><strong>Patrón regional:</strong> Se observa un "corredor de alta mortalidad" desde los Apalaches hasta Nueva Inglaterra, aunque los valores pueden cambiar según el año seleccionado.</li>
+            <li><strong>Variabilidad estatal:</strong> Las diferencias entre estados pueden alcanzar hasta 5 veces en tasas de mortalidad, con fluctuaciones anuales.</li>
         </ul>
-        <p><strong>Interpretación:</strong> Este análisis refuerza la necesidad de abordar el problema desde una perspectiva de salud pública.</p>
+        <p><strong>Interpretación:</strong> Este análisis refuerza la necesidad de abordar el problema desde una perspectiva de salud pública adaptada a la evolución de la crisis en el tiempo.</p>
     </div>
 """, unsafe_allow_html=True)
 
