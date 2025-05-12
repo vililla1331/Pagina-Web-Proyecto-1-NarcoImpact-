@@ -219,19 +219,30 @@ with st.container():
     <div class="graph-card zoom-effect">
         <div class="graph-title">🌡️ Distribución geográfica de muertes relacionadas con drogas en EE.UU. (1999-2015) </div>
     """, unsafe_allow_html=True)
-
-# Cargar los datos con la codificación correcta
+# Cargar los datos
 data = pd.read_csv('datos EEUU.csv', sep=';', encoding='latin1')
 
-# Filtrar datos relevantes y calcular **promedio anual** de muertes por estado considerando 'Year'
-state_deaths = data[data['State'] != 'United States'].groupby(['State', 'Year'])['Deaths'].sum().reset_index()
-state_deaths = state_deaths.groupby('State')['Deaths'].mean().reset_index()  # Promedio anual de muertes por estado
-state_deaths['Deaths'] = state_deaths['Deaths'].round().astype(int)  # Redondear valores
+# Crear un slider para seleccionar el año
+selected_year = st.slider("Selecciona un año", min_value=1999, max_value=2015, value=2010)
 
-# Calcular la tasa de mortalidad ajustada por población (muertes por cada 100,000 habitantes)
-pop_data = data.groupby('State')['Population'].mean().reset_index()  # Obtener población promedio por estado
-state_deaths = state_deaths.merge(pop_data, on='State', how='left')  # Unir con datos de población
-state_deaths['DeathRate'] = (state_deaths['Deaths'] / state_deaths['Population']) * 100000  # Calcular tasa ajustada
+# Filtrar los datos para el año seleccionado
+filtered_data = data[data['Year'] == selected_year]
+
+# Agrupar muertes por estado en el año seleccionado
+state_deaths = filtered_data.groupby('State')['Deaths'].sum().reset_index()
+
+# Obtener población por estado en el año seleccionado
+pop_data = filtered_data.groupby('State')['Population'].mean().reset_index()
+
+# Unir datos de muertes y población
+state_deaths = state_deaths.merge(pop_data, on='State', how='left')
+
+# Calcular la tasa de muertes ajustada por población
+state_deaths['DeathRate'] = (state_deaths['Deaths'] / state_deaths['Population']) * 100000
+state_deaths['DeathRate'] = state_deaths['DeathRate'].round().astype(int)  # Redondear valores
+
+# Limitar los valores entre 5 y 20
+state_deaths['DeathRate'] = state_deaths['DeathRate'].clip(5, 20)
 
 # Diccionario de nombres completos a códigos de estado
 state_abbr = {
@@ -247,53 +258,48 @@ state_abbr = {
     'Virginia': 'VA', 'Washington': 'WA', 'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY'
 }
 
-# Mantener una copia de los nombres completos antes de convertirlos en abreviaturas
-state_deaths['FullStateName'] = state_deaths['State']  # Guardamos los nombres completos
-state_deaths['State'] = state_deaths['State'].map(state_abbr)  # Reemplazamos nombres completos por códigos
-state_deaths = state_deaths.dropna()  # Eliminamos filas con valores NaN por nombres no coincidentes
+# Agregar código de estado
+state_deaths['StateCode'] = state_deaths['State'].map(state_abbr)
 
-# Crear el mapa interactivo con tasa de mortalidad ajustada por población
+# Crear el mapa interactivo con la escala ajustada
 fig = px.choropleth(
     state_deaths,
-    locations='State',
+    locations='StateCode',
     locationmode='USA-states',
-    color='DeathRate',  # Usamos la tasa ajustada en lugar del número total de muertes
+    color='DeathRate',
     scope='usa',
-    color_continuous_scale='Greens',
-    title='Tasa anual de muertes por drogas por estado en EEUU (1999-2015)',
-    hover_name='FullStateName',  # Mostrar el nombre completo del estado en lugar de la abreviatura
+    color_continuous_scale='Greens',  # Se mantiene el verde oscuro para valores altos
+    range_color=[5, 20],  # Ajustamos el rango de la escala de colores
+    title=f"Tasa anual de muertes por drogas en EE.UU. ({selected_year})",
+    hover_name='State',
     labels={'DeathRate': 'Muertes por cada 100,000 habitantes'}
 )
 
-
-# Ajustar la escala de colores y el fondo
+# Ajustar el diseño del gráfico con fuente en negro
 fig.update_layout(
     margin=dict(l=0, r=0, t=40, b=0),
     coloraxis_colorbar=dict(
-        title=dict(text='Tasa de muertes', font=dict(color='black')),  # Texto de la barra de color en negro
-        tickfont=dict(color='black'),  # Números de la barra de color en negro
+        title=dict(text='  ', font=dict(color='black')),
+        tickfont=dict(color='black'),
         thickness=20,
         len=0.75
     ),
     geo=dict(
         lakecolor='rgb(255, 255, 255)',
         landcolor='rgb(217, 217, 217)',
-        subunitcolor='black'  # Líneas divisorias en negro
+        subunitcolor='black'
     ),
     title=dict(
-        text='    ',
-        font=dict(color='black', size=20)  # Asegurar el título en negro
+        text=f'Tasa de muertes por drogas en EE.UU. ({selected_year})',
+        font=dict(color='black', size=20)
     ),
-    font=dict(color='black', size=14),  # Cambiar el color de toda la fuente en el gráfico
-    paper_bgcolor='#f5f5f7',  # Fondo claro
-    plot_bgcolor='#f5f5f7'  # Fondo del gráfico claro
+    font=dict(color='black', size=14),
+    paper_bgcolor='#f5f5f7',
+    plot_bgcolor='#f5f5f7'
 )
-
 
 # Mostrar el gráfico en Streamlit
 st.plotly_chart(fig, use_container_width=True)
-
-
 # Información adicional fuera del contenedor
 st.markdown("""
     <div style='line-height: 1.6; font-size: 20px;'>
