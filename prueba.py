@@ -241,6 +241,7 @@ state_deaths = state_deaths.merge(pop_data, on='State', how='left')
 state_deaths['DeathRate'] = (state_deaths['Deaths'] / state_deaths['Population']) * 100000
 state_deaths['DeathRate'] = state_deaths['DeathRate'].round().astype(int)  # Redondear valores
 
+state_deaths=state_deaths[state_deaths['State']!='United States']
 max_value=state_deaths['DeathRate'].max()
 
 # Diccionario de nombres completos a códigos de estado
