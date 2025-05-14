@@ -207,42 +207,22 @@ with st.container():
     </div>
     """, unsafe_allow_html=True)
 
-
-# GRÁFICO 4 - MAPA DE CALOR
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# GRÁFICO 4 - MAPA DE CALOR
-with st.container():
-    st.markdown("""
-    <div class="graph-card zoom-effect">
-        <div class="graph-title">🌡️ Distribución geográfica de muertes relacionadas con drogas en EE.UU. (1999-2015) </div>
-    """, unsafe_allow_html=True)
 # Cargar los datos
 data = pd.read_csv('datos EEUU.csv', sep=';', encoding='latin1')
 
-# Crear un slider para seleccionar el año
-selected_year = st.selectbox("Selecciona un año", tuple(range(1999,2016,1)))
+# ================================
+# 📌 GRÁFICO 1: Mapa de Calor de la Media
+# ================================
 
-# Filtrar los datos para el año seleccionado
-filtered_data = data[data['Year'] == selected_year]
-
-# Agrupar muertes por estado en el año seleccionado
-state_deaths = filtered_data.groupby('State')['Deaths'].sum().reset_index()
-
-# Obtener población por estado en el año seleccionado
-pop_data = filtered_data.groupby('State')['Population'].mean().reset_index()
-
-# Unir datos de muertes y población
-state_deaths = state_deaths.merge(pop_data, on='State', how='left')
-
-# Calcular la tasa de muertes ajustada por población
-state_deaths['DeathRate'] = (state_deaths['Deaths'] / state_deaths['Population']) * 100000
-state_deaths['DeathRate'] = state_deaths['DeathRate'].round().astype(int)  # Redondear valores
-
-state_deaths=state_deaths[state_deaths['State']!='United States']
-max_value=state_deaths['DeathRate'].max()
+# Agrupar datos para calcular la media de todos los años
+avg_data = data.groupby('State', as_index=False)[['Deaths', 'Population']].sum()
+avg_data['DeathRate'] = (avg_data['Deaths'] / avg_data['Population']) * 100000
+avg_data['DeathRate'] = avg_data['DeathRate'].round().astype(int)
+avg_data = avg_data[avg_data['State'] != 'United States']
 
 # Diccionario de nombres completos a códigos de estado
 state_abbr = {
@@ -258,26 +238,82 @@ state_abbr = {
     'Virginia': 'VA', 'Washington': 'WA', 'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY'
 }
 
-# Agregar código de estado
+avg_data['StateCode'] = avg_data['State'].map(state_abbr)
+
+# Crear el mapa de calor de la media de muertes
+fig_avg = px.choropleth(
+    avg_data,
+    locations='StateCode',
+    locationmode='USA-states',
+    color='DeathRate',
+    scope='usa',
+    color_continuous_scale='Blues',
+    title="Promedio de tasa de muertes por drogas en EE.UU. (1999-2015)",
+    hover_name='State',
+    labels={'DeathRate': 'Muertes por cada 100,000 habitantes'}
+)
+
+# Ajustar el diseño del gráfico para que coincida con el segundo
+fig_avg.update_layout(
+    margin=dict(l=0, r=0, t=40, b=0),
+    coloraxis_colorbar=dict(
+        title=dict(text='  ', font=dict(color='black')),
+        tickfont=dict(color='black'),
+        thickness=20,
+        len=0.75
+    ),
+    geo=dict(
+        lakecolor='rgb(255, 255, 255)',
+        landcolor='rgb(217, 217, 217)',
+        subunitcolor='black'
+    ),
+    title=dict(
+        text="Promedio de tasa de muertes por drogas en EE.UU. (1999-2015)",
+        font=dict(color='black', size=20)
+    ),
+    font=dict(color='black', size=14),
+    paper_bgcolor='#f5f5f7',
+    plot_bgcolor='#f5f5f7'
+)
+
+# Mostrar el gráfico promedio antes del desplegable
+st.plotly_chart(fig_avg, use_container_width=True)
+
+# ================================
+# 📌 GRÁFICO 2: Mapa de Calor por Año (con selector)
+# ================================
+
+# Crear un selector de año
+selected_year = st.selectbox("Selecciona un año", tuple(range(1999, 2016, 1)))
+
+# Filtrar los datos para el año seleccionado
+filtered_data = data[data['Year'] == selected_year]
+state_deaths = filtered_data.groupby('State')['Deaths'].sum().reset_index()
+pop_data = filtered_data.groupby('State')['Population'].mean().reset_index()
+state_deaths = state_deaths.merge(pop_data, on='State', how='left')
+state_deaths['DeathRate'] = (state_deaths['Deaths'] / state_deaths['Population']) * 100000
+state_deaths['DeathRate'] = state_deaths['DeathRate'].round().astype(int)
+state_deaths = state_deaths[state_deaths['State'] != 'United States']
+max_value = state_deaths['DeathRate'].max()
+
+# Agregar códigos de estado
 state_deaths['StateCode'] = state_deaths['State'].map(state_abbr)
 
-
-
-# Crear el mapa interactivo con la escala ajustada
+# Crear el mapa anual
 fig = px.choropleth(
     state_deaths,
     locations='StateCode',
     locationmode='USA-states',
     color='DeathRate',
     scope='usa',
-    color_continuous_scale='Greens',  # Se mantiene el verde oscuro para valores altos
-    range_color=[0, max_value],  # Ajustamos el rango de la escala de colores
+    color_continuous_scale='Greens',
+    range_color=[0, max_value],
     title=f"Tasa anual de muertes por drogas en EE.UU. ({selected_year})",
     hover_name='State',
     labels={'DeathRate': 'Muertes por cada 100,000 habitantes'}
 )
 
-# Ajustar el diseño del gráfico con fuente en negro
+# Ajustar el diseño del gráfico para que coincida con el primero
 fig.update_layout(
     margin=dict(l=0, r=0, t=40, b=0),
     coloraxis_colorbar=dict(
@@ -300,8 +336,13 @@ fig.update_layout(
     plot_bgcolor='#f5f5f7'
 )
 
-# Mostrar el gráfico en Streamlit
+# Mostrar el gráfico anual en Streamlit
 st.plotly_chart(fig, use_container_width=True)
+
+
+
+
+
 # Información adicional fuera del contenedor
 st.markdown("""
     <div style='line-height: 1.6; font-size: 20px;'>
