@@ -223,7 +223,7 @@ with st.container():
 data = pd.read_csv('datos EEUU.csv', sep=';', encoding='latin1')
 
 # Crear un slider para seleccionar el año
-selected_year = st.slider("Selecciona un año", min_value=1999, max_value=2015, value=2010)
+selected_year = st.selectbox("Selecciona un año", tuple(range(1999,2016,1)))
 
 # Filtrar los datos para el año seleccionado
 filtered_data = data[data['Year'] == selected_year]
