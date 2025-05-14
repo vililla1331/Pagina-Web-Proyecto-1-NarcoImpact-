@@ -241,8 +241,7 @@ state_deaths = state_deaths.merge(pop_data, on='State', how='left')
 state_deaths['DeathRate'] = (state_deaths['Deaths'] / state_deaths['Population']) * 100000
 state_deaths['DeathRate'] = state_deaths['DeathRate'].round().astype(int)  # Redondear valores
 
-# Limitar los valores entre 5 y 20
-state_deaths['DeathRate'] = state_deaths['DeathRate'].clip(5, 20)
+max_value=state_deaths['DeathRate'].max()
 
 # Diccionario de nombres completos a códigos de estado
 state_abbr = {
@@ -261,6 +260,8 @@ state_abbr = {
 # Agregar código de estado
 state_deaths['StateCode'] = state_deaths['State'].map(state_abbr)
 
+
+
 # Crear el mapa interactivo con la escala ajustada
 fig = px.choropleth(
     state_deaths,
@@ -269,7 +270,7 @@ fig = px.choropleth(
     color='DeathRate',
     scope='usa',
     color_continuous_scale='Greens',  # Se mantiene el verde oscuro para valores altos
-    range_color=[5, 20],  # Ajustamos el rango de la escala de colores
+    range_color=[0, max_value],  # Ajustamos el rango de la escala de colores
     title=f"Tasa anual de muertes por drogas en EE.UU. ({selected_year})",
     hover_name='State',
     labels={'DeathRate': 'Muertes por cada 100,000 habitantes'}
