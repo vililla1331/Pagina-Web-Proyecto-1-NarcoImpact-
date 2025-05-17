@@ -175,15 +175,30 @@ with st.container():
         </div>
     </div>
     """, unsafe_allow_html=True)
-# GRÁFICO 3
+# Grafico 3
+import streamlit as st
+from PIL import Image
+
+# Cargar imágenes
+img3 = Image.open("grafico_donut_EEUU.jpg")
+img4 = Image.open("grafico_donut_Suiza.jpg")
+
+# Crear contenedor para disposición lado a lado
 with st.container():
     st.markdown("""
     <div class="graph-card zoom-effect">
-        <div class="graph-title">⚖️ Muertes por drogadicción según género en Suiza (1995-2023)</div>
+        <div class="graph-title">⚖️ Muertes por drogadicción según género en EE.UU. y Suiza (1995-2023)</div>
     """, unsafe_allow_html=True)
-    img3 = Image.open("grafico donut EEUU.jpg")
-    img4= Image.open('grafico donut Suiza.jpg')
-    st.image(img3, img4, width=1100)
+    
+    # Mostrar imágenes en columnas para alinearlas horizontalmente
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.image(img3, width=500, caption="Muertes por drogadicción en EE.UU.")
+    
+    with col2:
+        st.image(img4, width=500, caption="Muertes por drogadicción en Suiza")
+
     st.markdown("""
         <div style='line-height: 1.6; font-size: 20px;'>
             <h4 style='color: #1d1d1f; margin-top: 15px;'>Hallazgos clave:</h4>
@@ -207,6 +222,7 @@ with st.container():
         </div>
     </div>
     """, unsafe_allow_html=True)
+
 
 import streamlit as st
 import pandas as pd
