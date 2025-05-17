@@ -181,9 +181,9 @@ with st.container():
     <div class="graph-card zoom-effect">
         <div class="graph-title">⚖️ Muertes por drogadicción según género en Suiza (1995-2023)</div>
     """, unsafe_allow_html=True)
-    img3 = Image.open("grafico donut.png")
-    img4= Image.open()
-    st.image(img3, width=1100)
+    img3 = Image.open("grafico donut EEUU.jpg")
+    img4= Image.open('grafico donut Suiza.jpg')
+    st.image(img3, img4, width=1100)
     st.markdown("""
         <div style='line-height: 1.6; font-size: 20px;'>
             <h4 style='color: #1d1d1f; margin-top: 15px;'>Hallazgos clave:</h4>
