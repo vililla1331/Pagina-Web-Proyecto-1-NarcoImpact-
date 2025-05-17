@@ -180,8 +180,8 @@ import streamlit as st
 from PIL import Image
 
 # Cargar imágenes
-img3 = Image.open("grafico_donut_EEUU.jpg")
-img4 = Image.open("grafico_donut_Suiza.jpg")
+img3 = Image.open("grafico donut EEUU.jpg")
+img4 = Image.open("grafico donut Suiza.jpg")
 
 # Crear contenedor para disposición lado a lado
 with st.container():
