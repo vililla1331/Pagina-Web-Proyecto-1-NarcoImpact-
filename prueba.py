@@ -182,6 +182,7 @@ with st.container():
         <div class="graph-title">⚖️ Muertes por drogadicción según género en Suiza (1995-2023)</div>
     """, unsafe_allow_html=True)
     img3 = Image.open("grafico donut.png")
+    img4= Image.open()
     st.image(img3, width=1100)
     st.markdown("""
         <div style='line-height: 1.6; font-size: 20px;'>
