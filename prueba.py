@@ -61,11 +61,8 @@ with st.container():
     <div class="section">
         <h2 style='color: #1d1d1f; margin-bottom: 20px;'>¿Qué es NarcoImpact?</h2>
         <p style='line-height: 1.6; font-size: 20px;'>
-        <strong>NarcoImpact</strong> es una plataforma de divulgación que compara el
-        impacto de dos enfoques opuestos frente al consumo de drogas: el modelo punitivo de Estados Unidos y
-        el modelo de Reducción de Daños de Suiza. A través del análisis de datos oficiales, este proyecto evalúa la efectividad de 
-        ambas estrategias en términos de salud pública, mortalidad por sobredosis y reintegración social, con el objetivo de promover 
-        políticas más humanas y basadas en evidencia.
+        <strong>NarcoImpact</strong> es un proyecto que analiza el efecto de las políticas antidroga aplicadas por Estados Unidos (modelo de prohibición) y Suiza (modelo de reducción de daños).<br>
+        El objetivo es demostrar, mediante datos reales, cuál estrategia resulta más efectiva en términos de salud pública, mortalidad y gestión del consumo.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -76,7 +73,7 @@ with st.container():
     <div class="motivation-container fade-in">
         <h2 style='color: #1d1d1f; margin-bottom: 20px;'>💡 Motivación del proyecto</h2>
         <p style='line-height: 1.6; font-size: 20px; margin-bottom: 25px;'>
-        Este proyecto surge de la necesidad de replantear las políticas antidroga tradicionales, que han demostrado ser ineficaces y costosas. Frente al fracaso del enfoque punitivo, se propone analizar alternativas centradas en la salud pública y la dignidad humana. NarcoImpact busca contribuir al debate global sobre drogas, ofreciendo evidencia comparativa entre dos modelos con resultados radicalmente distintos. Para ello queremos abordar los siguientes puntos:
+        Este proyecto nace de la necesidad de abordar el problema de la drogodependencia desde una perspectiva basada en evidencia científica y resultados comprobables. Para ello queremos abordar los siguientes puntos:
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -86,7 +83,7 @@ with st.container():
         st.markdown("""
         <div class="motivation-item">
             <h3 style='color: #1d1d1f;'>El problema multidimensional</h3>
-            <p style=font-size: 20px;> La drogodependencia no es solo un problema de salud pública, sino también un fenómeno social, económico y legal. Su abordaje requiere estrategias integrales que consideren factores como la exclusión social, la salud mental y la desigualdad.</p>
+            <p style=font-size: 20px;> La drogodependencia no es solo un problema de salud pública según la OMS, sino que genera una cadena de problemas que afectan múltiples aspectos sociales, desde la violencia hasta el sistema judicial.</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -94,7 +91,7 @@ with st.container():
         st.markdown("""
         <div class="motivation-item">
             <h3 style='color: #1d1d1f;'>El fracaso del prohibicionismo</h3>
-            <p style= font-size: 20px;>La “guerra contra las drogas” en EE.UU. ha generado encarcelamientos masivos, desigualdad racial y un aumento sostenido de muertes por sobredosis. Este enfoque ha demostrado ser ineficaz y contraproducente.</p>
+            <p style= font-size: 20px;> EE.UU. implementó políticas de prohibición categórica en los 90s, resultando en miles de arrestos pero con un aumento constante de adictos y sobredosis, demostrando la inefectividad de este enfoque.</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -102,7 +99,7 @@ with st.container():
         st.markdown("""
         <div class="motivation-item">
             <h3 style='color: #1d1d1f;'>La alternativa suiza</h3>
-            <p style= font-size: 20px;> Suiza implementó en los años 90 la política de los Cuatro Pilares: prevención, terapia, reducción de riesgos y represión. Este modelo ha logrado reducir significativamente la mortalidad y mejorar la calidad de vida de las personas usuarias.</p>
+            <p style= font-size: 20px;> Suiza adoptó la estrategia de Reducción de Daños (parte de los Cuatro Pilares), obteniendo resultados notablemente mejores en salud pública y reinserción social.</p>
         </div>
         """, unsafe_allow_html=True)
 
