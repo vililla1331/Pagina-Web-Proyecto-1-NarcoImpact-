@@ -64,12 +64,9 @@ with st.container():
         <strong>NarcoImpact</strong> es un proyecto de análisis comparativo que evalúa científicamente los resultados de dos modelos antagónicos:
         </p>
         <ul style='line-height: 1.6; font-size: 20px;'>
-            <li><strong>Modelo prohibitivo (EE.UU.):</strong> Basado en la "Guerra contra las Drogas" iniciada en 1970, con enfoque punitivo y altas tasas de encarcelamiento (Capítulo 2)</li>
-            <li><strong>Modelo de Reducción de Daños (Suiza):</strong> Implementado desde 1994 mediante la política de los Cuatro Pilares, tratando la adicción como problema de salud pública (Capítulo 2)</li>
+            <li><strong>Modelo prohibitivo (EE.UU.):</strong> Basado en la "Guerra contra las Drogas" iniciada en 1970, con enfoque punitivo y altas tasas de encarcelamiento.</li>
+            <li><strong>Modelo de Reducción de Daños (Suiza):</strong> Implementado desde 1994 mediante la política de los Cuatro Pilares, tratando la adicción como problema de salud pública.</li>
         </ul>
-        <p style='line-height: 1.6; font-size: 20px;'>
-        Nuestros datos demuestran que mientras EE.UU. alcanzó 32 muertes/100k hab. en 2022, Suiza se mantuvo en 3-4 muertes/100k hab. (Figura 1 de la memoria).
-        </p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -89,7 +86,7 @@ with st.container():
         st.markdown("""
         <div class="motivation-item">
             <h3 style='color: #1d1d1f;'>El problema multidimensional</h3>
-            <p style=font-size: 20px;> La drogodependencia no es solo un problema de salud pública según la OMS, sino que genera una cadena de problemas que afectan múltiples aspectos sociales, desde la violencia hasta el sistema judicial.</p>
+            <p style='font-size: 20px;'> La drogodependencia no es solo un problema de salud pública según la OMS, sino que genera una cadena de problemas que afectan múltiples aspectos sociales, desde la violencia hasta el sistema judicial.</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -97,7 +94,7 @@ with st.container():
         st.markdown("""
         <div class="motivation-item">
             <h3 style='color: #1d1d1f;'>El fracaso del prohibicionismo</h3>
-            <p style= font-size: 20px;> EE.UU. implementó políticas de prohibición categórica en los 90s, resultando en miles de arrestos pero con un aumento constante de adictos y sobredosis, demostrando la inefectividad de este enfoque.</p>
+            <p style= 'font-size: 20px;'> EE.UU. implementó políticas de prohibición categórica en los 90s, resultando en miles de arrestos pero con un aumento constante de adictos y sobredosis, demostrando la inefectividad de este enfoque.</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -105,13 +102,13 @@ with st.container():
         st.markdown("""
         <div class="motivation-item">
             <h3 style='color: #1d1d1f;'>La alternativa suiza</h3>
-            <p style= font-size: 20px;> Suiza adoptó la estrategia de Reducción de Daños (parte de los Cuatro Pilares), obteniendo resultados notablemente mejores en salud pública y reinserción social.</p>
+            <p style= 'font-size: 20px;'> Suiza adoptó la estrategia de Reducción de Daños (parte de los Cuatro Pilares), obteniendo resultados notablemente mejores en salud pública y reinserción social.</p>
         </div>
         """, unsafe_allow_html=True)
     with st.container():
         st.markdown("""
         <div class="motivation-item">
-            <h3 style='color: #1d1d1f;'>Impacto en los ODS</h3>
+            <h3 style='color: #1d1d1f;'>Impacto en los ODS (Objetivos de Desarrollo Sostenible) </h3>
             <p style='font-size: 20px;'>
             Como se detalla en el Capítulo 3, este proyecto contribuye directamente a:
             </p>
