@@ -109,19 +109,19 @@ with st.container():
         </div>
         """, unsafe_allow_html=True)
     with st.container():
-    st.markdown("""
-    <div class="motivation-item">
-        <h3 style='color: #1d1d1f;'>Impacto en los ODS</h3>
-        <p style='font-size: 20px;'>
-        Como se detalla en el Capítulo 3, este proyecto contribuye directamente a:
-        </p>
-        <ul style='font-size: 20px;'>
-            <li><strong>ODS 3 (Salud):</strong> Reducción del 60% en muertes por sobredosis en Suiza vs aumento del 400% en EE.UU.</li>
-            <li><strong>ODS 16 (Justicia):</strong> Encarcelamiento 6-10 veces mayor para afroamericanos por delitos de drogas (Capítulo 2)</li>
-            <li><strong>ODS 11 (Ciudades):</strong> Programas suizos redujeron el crimen asociado en un 35% (Federal Office of Public Health, 2008)</li>
-        </ul>
-    </div>
-    """, unsafe_allow_html=True)
+        st.markdown("""
+        <div class="motivation-item">
+            <h3 style='color: #1d1d1f;'>Impacto en los ODS</h3>
+            <p style='font-size: 20px;'>
+            Como se detalla en el Capítulo 3, este proyecto contribuye directamente a:
+            </p>
+            <ul style='font-size: 20px;'>
+                <li><strong>ODS 3 (Salud):</strong> Reducción del 60% en muertes por sobredosis en Suiza vs aumento del 400% en EE.UU.</li>
+                <li><strong>ODS 16 (Justicia):</strong> Encarcelamiento 6-10 veces mayor para afroamericanos por delitos de drogas (Capítulo 2)</li>
+                <li><strong>ODS 11 (Ciudades):</strong> Programas suizos redujeron el crimen asociado en un 35% (Federal Office of Public Health, 2008)</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
 # SECCIÓN DE MEMORIA
 with st.container():
