@@ -132,7 +132,7 @@ with st.container():
         <div style='text-align: center; margin-top: 25px;'>
     """, unsafe_allow_html=True)
     
-    pdf_url = 'https://drive.google.com/file/d/1miOLYEMw7HF9c5ndxefcZa7f0cq211ga/view?usp=sharing'
+    pdf_url = 'https://drive.google.com/file/d/1iDULcqOpAHFk2tJlrPOZN70J-vGdfQuG/view?usp=drive_link'
     st.markdown(get_pdf_view_link(pdf_url), unsafe_allow_html=True)
 
 # SECCIÓN DE TÍTULO DE GRÁFICOS
