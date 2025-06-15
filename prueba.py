@@ -311,37 +311,16 @@ with st.container():
     st.plotly_chart(fig_avg, use_container_width=True)
 
     st.markdown("""
-        <div style='background-color: #f8f9fa; padding: 15px; border-left: 4px solid #6c757d; border-radius: 0 4px 4px 0; margin: 20px 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif;'>
-            <h3 style='color: #2c3e50; margin-top: 0; font-size: 1.2rem;'>Análisis del promedio histórico</h3>
-            
-            <div style='line-height: 1.6; font-size: 16px; color: #333;'>
-                <p><strong>Tendencia nacional:</strong> El promedio nacional fue de {:.1f} muertes por cada 100,000 habitantes durante el período 1999-2015.</p>
-                <p><strong>Estado destacado:</strong> {} registró la tasa más alta con {} muertes/100k, mientras que {} tuvo la más baja con {}.</p>
-                <p><strong>Patrón geográfico:</strong> Los estados del noreste industrial y la región de los Apalaches muestran consistentemente las tasas más elevadas.</p>
-            </div>
-            
-            <div style='margin-top: 10px; font-size: 15px; color: #555; font-style: italic;'>
-                <strong>Dato relevante:</strong> La diferencia entre el estado con mayor y menor tasa fue de {} puntos, evidenciando disparidades regionales significativas.
-            </div>
-        </div>
-        
-        <div style='line-height: 1.6; font-size: 20px; margin-top: 20px;'>
-            <strong>Hallazgos clave:</strong>
-            <ul>
-                <li>El "Corredor de los Apalaches" (West Virginia, Kentucky, Ohio) muestra las tasas más altas consistentemente</li>
-                <li>Los estados con políticas más restrictivas (ej: Texas) no necesariamente presentan menores tasas</li>
-                <li>La distribución geográfica sugiere factores socioeconómicos subyacentes</li>
-            </ul>
-        </div>
+    <div style='line-height: 1.6; font-size: 20px; margin-top: 20px;'>
+        <strong>Hallazgos clave:</strong>
+        <ul>
+            <li>El "Corredor de los Apalaches" (West Virginia, Kentucky, Ohio) muestra las tasas más altas consistentemente</li>
+            <li>Los estados con políticas más restrictivas (ej: Texas) no necesariamente presentan menores tasas</li>
+            <li>La distribución geográfica sugiere factores socioeconómicos subyacentes</li>
+        </ul>
     </div>
-    """.format(
-        avg_data['DeathRate'].mean(),
-        avg_data.loc[avg_data['DeathRate'].idxmax(), 'State'],
-        avg_data['DeathRate'].max(),
-        avg_data.loc[avg_data['DeathRate'].idxmin(), 'State'],
-        avg_data['DeathRate'].min(),
-        avg_data['DeathRate'].max() - avg_data['DeathRate'].min()
-    ), unsafe_allow_html=True)
+</div>
+""", unsafe_allow_html=True)
 
 # ================================
 # 📌 GRÁFICO 5: Mapa de Calor por Año (con selector y descripción mejorada)
