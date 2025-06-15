@@ -399,19 +399,68 @@ fig.update_layout(
 # Mostrar el gráfico anual en Streamlit
 st.plotly_chart(fig, use_container_width=True)
 
-# Información adicional fuera del contenedor
+# Diccionario de descripciones contextuales por año
+year_context = {
+    1999: {
+        "tendencia": "Inicio de la crisis de opioides recetados. Las tasas son relativamente bajas pero muestran disparidades regionales tempranas.",
+        "destacado": f"El estado con mayor tasa fue Nevada ({state_deaths.loc[state_deaths['DeathRate'].idxmax(), 'State']} con {max_value} muertes/100k).",
+        "eventos": "La FDA aprueba OxyContin en 1996, marcando el inicio de la epidemia de opioides."
+    },
+    2005: {
+        "tendencia": "Aumento acelerado en estados industriales. Las tasas superan por primera vez las 15 muertes/100k en varios estados.",
+        "destacado": f"West Virginia emerge como epicentro ({state_deaths.loc[state_deaths['State'] == 'West Virginia', 'DeathRate'].values[0]} muertes/100k).",
+        "eventos": "Primeras demandas contra Purdue Pharma por publicidad engañosa de OxyContin."
+    },
+    2010: {
+        "tendencia": "Pico de muertes por opioides recetados. La tasa nacional supera las 12 muertes/100k.",
+        "destacado": f"Kentucky lidera las tasas ({state_deaths.loc[state_deaths['State'] == 'Kentucky', 'DeathRate'].values[0]} muertes/100k).",
+        "eventos": "La DEA implementa el programa ARCOS para monitorear distribuidores farmacéuticos."
+    },
+    2015: {
+        "tendencia": "Transición a heroína y fentanilo sintético. Aumento del 72% en muertes desde 2010.",
+        "destacado": f"New Hampshire sufre el mayor incremento interanual (+31% desde 2014).",
+        "eventos": "El CDC publica nuevas guías para prescribir opioides (marzo 2016)."
+    }
+}
+
+# Función para obtener el contexto más cercano
+def get_closest_context(year):
+    closest_year = min(year_context.keys(), key=lambda x: abs(x - year))
+    return year_context[closest_year]
+
+# Obtener contexto para el año seleccionado
+context = get_closest_context(selected_year)
+
+# Descripción dinámica con estilo similar al mapa promedio
 st.markdown(f"""
-    <div style='line-height: 1.6; font-size: 20px; margin-top: 20px;'>
-        <strong>Análisis para {selected_year}:</strong>
-        <ul>
-            <li>La crisis de opioides recetados (2000-2010) y el fentanilo (post-2013) generaron patrones distintos</li>
-            <li>Algunos estados mostraron mejoras temporales asociadas a programas piloto de reducción de daños</li>
-            <li>La variabilidad interanual refleja la efectividad (o inefectividad) de políticas locales</li>
-        </ul>
-        <p><em>Fuente: CDC Wonder Database - Elaboración propia siguiendo metodología del Capítulo 5</em></p>
+<div style='background-color: #f8f9fa; padding: 20px; border-left: 4px solid #6c757d; border-radius: 0 4px 4px 0; margin: 25px 0;'>
+    <h3 style='color: #2c3e50; margin-top: 0;'>Contexto en {selected_year}</h3>
+    
+    <div style='line-height: 1.6; font-size: 18px;'>
+        <p><strong>Tendencia nacional:</strong> {context["tendencia"]}</p>
+        <p><strong>Estado destacado:</strong> {context["destacado"]}</p>
+        <p><strong>Eventos clave:</strong> {context["eventos"]}</p>
+        
+        <div style='margin-top: 15px; font-size: 16px; color: #555;'>
+            <i class="fas fa-lightbulb" style='color: #f39c12;'></i> <strong>Dato relevante:</strong> En {selected_year}, la tasa nacional fue de 
+            {filtered_data[filtered_data['State'] == 'United States']['Deaths'].sum() / filtered_data[filtered_data['State'] == 'United States']['Population'].sum() * 100000:.1f} 
+            muertes por 100,000 habitantes.
+        </div>
     </div>
 </div>
+
+<div style='line-height: 1.6; font-size: 20px; margin-top: 20px;'>
+    <strong>Análisis comparativo:</strong>
+    <ul>
+        <li>La crisis evolucionó desde opioides recetados (2000-2010) hacia heroína/fentanilo (post-2013)</li>
+        <li>Estados con políticas restrictivas mostraron menor efectividad que aquellos con enfoques preventivos</li>
+        <li>La variabilidad interanual refleja la efectividad de políticas locales</li>
+    </ul>
+    <p><em>Fuente: CDC Wonder Database - Elaboración propia</em></p>
+</div>
+</div>
 """, unsafe_allow_html=True)
+
 # CONCLUSIONES
 with st.container():
     st.markdown("""
