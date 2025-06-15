@@ -4,7 +4,7 @@ import base64
 import os
 import pandas as pd
 import plotly.express as px
-# Para lanzar la pagina web --->  python -m streamlit run prueba.py
+
 # Configuración de página
 st.set_page_config(
     page_title="NarcoImpact",
@@ -134,6 +134,7 @@ with st.container():
     
     pdf_url = 'https://drive.google.com/file/d/1miOLYEMw7HF9c5ndxefcZa7f0cq211ga/view?usp=sharing'
     st.markdown(get_pdf_view_link(pdf_url), unsafe_allow_html=True)
+
 # SECCIÓN DE TÍTULO DE GRÁFICOS
 with st.container():
     st.markdown("""
@@ -144,6 +145,7 @@ with st.container():
         </p>
     </div>
     """, unsafe_allow_html=True)
+
 # GRÁFICO 1
 with st.container():
     st.markdown("""
@@ -160,15 +162,13 @@ with st.container():
     </div>
 """, unsafe_allow_html=True)
 
-
-# GRÁFICO 2 - EVOLUCIÓN DE TASA DE DROGADICCIÓN EN SUIZA (CORREGIDO)
+# GRÁFICO 2 - EVOLUCIÓN DE TASA DE DROGADICCIÓN EN SUIZA
 with st.container():
     st.markdown("""
     <div class="graph-card zoom-effect">
         <div class="graph-title">📉 Evolución de la tasa de drogadicción en Suiza (1990-2023)</div>
     """, unsafe_allow_html=True)
     
-    # Asegúrate de tener esta imagen en tu directorio
     img_suiza = Image.open("evolucion_droga_suiza.png")  
     st.image(img_suiza, width=900)
     
@@ -192,22 +192,17 @@ with st.container():
         </div>
     </div>
     """, unsafe_allow_html=True)
-# Grafico 3
-import streamlit as st
-from PIL import Image
 
-# Cargar imágenes
-img3 = Image.open("grafico donut EEUU.jpg")
-img4 = Image.open("grafico donut Suiza.jpg")
-
-# Crear contenedor para disposición lado a lado
+# GRÁFICO 3 - MUERTES POR GÉNERO
 with st.container():
+    img3 = Image.open("grafico donut EEUU.jpg")
+    img4 = Image.open("grafico donut Suiza.jpg")
+
     st.markdown("""
     <div class="graph-card zoom-effect">
         <div class="graph-title">⚖️ Muertes por drogadicción según género en EE.UU. y Suiza (1995-2023)</div>
     """, unsafe_allow_html=True)
     
-    # Mostrar imágenes en columnas para alinearlas horizontalmente
     col1, col2 = st.columns(2)
     
     with col1:
@@ -240,31 +235,8 @@ with st.container():
     </div>
     """, unsafe_allow_html=True)
 
-
-import streamlit as st
-import pandas as pd
-import plotly.express as px
-
-# Cargar los datos
+# Cargar datos para mapas
 data = pd.read_csv('datos EEUU.csv', sep=';', encoding='latin1')
-
-# ================================
-# 📌 GRÁFICO 1: Mapa de Calor de la Media
-# ================================
-st.markdown("""
-<div class="graph-card zoom-effect">
-    <div class="graph-title">🌡️ Mapa de calor: Promedio de muertes por sobredosis por estado (EE.UU. 1999-2015)</div>
-    <div style='line-height: 1.6; font-size: 20px; margin-bottom: 20px;'>
-        Este mapa muestra el <strong>promedio histórico</strong> de muertes por sobredosis por cada 100,000 habitantes en cada estado. 
-        Los tonos más oscuros indican mayores tasas de mortalidad, revelando patrones geográficos persistentes:
-    </div>
-""", unsafe_allow_html=True)
-
-# Agrupar datos para calcular la media de todos los años
-avg_data = data.groupby('State', as_index=False)[['Deaths', 'Population']].sum()
-avg_data['DeathRate'] = (avg_data['Deaths'] / avg_data['Population']) * 100000
-avg_data['DeathRate'] = avg_data['DeathRate'].round().astype(int)
-avg_data = avg_data[avg_data['State'] != 'United States']
 
 # Diccionario de nombres completos a códigos de estado
 state_abbr = {
@@ -280,186 +252,225 @@ state_abbr = {
     'Virginia': 'VA', 'Washington': 'WA', 'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY'
 }
 
-avg_data['StateCode'] = avg_data['State'].map(state_abbr)
-
-# Crear el mapa de calor de la media de muertes
-fig_avg = px.choropleth(
-    avg_data,
-    locations='StateCode',
-    locationmode='USA-states',
-    color='DeathRate',
-    scope='usa',
-    color_continuous_scale='Blues',
-    title="Promedio de tasa de muertes por drogas en EE.UU. (1999-2015)",
-    hover_name='State',
-    labels={'DeathRate': 'Muertes por cada 100,000 habitantes'}
-)
-
-# Ajustar el diseño del gráfico para que coincida con el segundo
-fig_avg.update_layout(
-    margin=dict(l=0, r=0, t=40, b=0),
-    coloraxis_colorbar=dict(
-        title=dict(text='  ', font=dict(color='black')),
-        tickfont=dict(color='black'),
-        thickness=20,
-        len=0.75
-    ),
-    geo=dict(
-        lakecolor='rgb(255, 255, 255)',
-        landcolor='rgb(217, 217, 217)',
-        subunitcolor='black'
-    ),
-    title=dict(
-        text="Promedio de tasa de muertes por drogas en EE.UU. (1999-2015)",
-        font=dict(color='black', size=20)
-    ),
-    font=dict(color='black', size=14),
-    paper_bgcolor='#f5f5f7',
-    plot_bgcolor='#f5f5f7'
-)
-
-# Mostrar el gráfico promedio antes del desplegable
-st.plotly_chart(fig_avg, use_container_width=True)
-
-st.markdown("""
-    <div style='line-height: 1.6; font-size: 20px; margin-top: 20px;'>
-        <strong>Hallazgos clave:</strong>
-        <ul>
-            <li>El "Corredor de los Apalaches" (West Virginia, Kentucky, Ohio) muestra las tasas más altas consistentemente</li>
-            <li>Los estados con políticas más restrictivas (ej: Texas) no necesariamente presentan menores tasas</li>
-            <li>La distribución geográfica sugiere factores socioeconómicos subyacentes</li>
-        </ul>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
 # ================================
-# 📌 GRÁFICO 2: Mapa de Calor por Año (con selector)
+# 📌 GRÁFICO 4: Mapa de Calor de la Media
 # ================================
-st.markdown("""
-<div class="graph-card zoom-effect">
-    <div class="graph-title">📅 Evolución anual: Muertes por sobredosis por estado</div>
-    <div style='line-height: 1.6; font-size: 20px; margin-bottom: 20px;'>
-        Seleccione un año para visualizar cómo variaron las tasas de mortalidad entre estados. Este análisis temporal revela:
-    </div>
-""", unsafe_allow_html=True)
-# Crear un selector de año
-selected_year = st.selectbox("Selecciona un año", tuple(range(1999, 2016, 1)))
+with st.container():
+    st.markdown("""
+    <div class="graph-card zoom-effect">
+        <div class="graph-title">🌡️ Mapa de calor: Promedio de muertes por sobredosis por estado (EE.UU. 1999-2015)</div>
+        <div style='line-height: 1.6; font-size: 20px; margin-bottom: 20px;'>
+            Este mapa muestra el <strong>promedio histórico</strong> de muertes por sobredosis por cada 100,000 habitantes en cada estado. 
+            Los tonos más oscuros indican mayores tasas de mortalidad, revelando patrones geográficos persistentes:
+        </div>
+    """, unsafe_allow_html=True)
 
-# Filtrar los datos para el año seleccionado
-filtered_data = data[data['Year'] == selected_year]
-state_deaths = filtered_data.groupby('State')['Deaths'].sum().reset_index()
-pop_data = filtered_data.groupby('State')['Population'].mean().reset_index()
-state_deaths = state_deaths.merge(pop_data, on='State', how='left')
-state_deaths['DeathRate'] = (state_deaths['Deaths'] / state_deaths['Population']) * 100000
-state_deaths['DeathRate'] = state_deaths['DeathRate'].round().astype(int)
-state_deaths = state_deaths[state_deaths['State'] != 'United States']
-max_value = state_deaths['DeathRate'].max()
+    # Agrupar datos para calcular la media de todos los años
+    avg_data = data.groupby('State', as_index=False)[['Deaths', 'Population']].sum()
+    avg_data['DeathRate'] = (avg_data['Deaths'] / avg_data['Population']) * 100000
+    avg_data['DeathRate'] = avg_data['DeathRate'].round().astype(int)
+    avg_data = avg_data[avg_data['State'] != 'United States']
+    avg_data['StateCode'] = avg_data['State'].map(state_abbr)
 
-# Agregar códigos de estado
-state_deaths['StateCode'] = state_deaths['State'].map(state_abbr)
+    # Crear el mapa de calor de la media de muertes
+    fig_avg = px.choropleth(
+        avg_data,
+        locations='StateCode',
+        locationmode='USA-states',
+        color='DeathRate',
+        scope='usa',
+        color_continuous_scale='Blues',
+        title="Promedio de tasa de muertes por drogas en EE.UU. (1999-2015)",
+        hover_name='State',
+        labels={'DeathRate': 'Muertes por cada 100,000 habitantes'}
+    )
 
-# Crear el mapa anual
-fig = px.choropleth(
-    state_deaths,
-    locations='StateCode',
-    locationmode='USA-states',
-    color='DeathRate',
-    scope='usa',
-    color_continuous_scale='Greens',
-    range_color=[0, max_value],
-    title=f"Tasa anual de muertes por drogas en EE.UU. ({selected_year})",
-    hover_name='State',
-    labels={'DeathRate': 'Muertes por cada 100,000 habitantes'}
-)
+    # Ajustar el diseño del gráfico
+    fig_avg.update_layout(
+        margin=dict(l=0, r=0, t=40, b=0),
+        coloraxis_colorbar=dict(
+            title=dict(text='  ', font=dict(color='black')),
+            tickfont=dict(color='black'),
+            thickness=20,
+            len=0.75
+        ),
+        geo=dict(
+            lakecolor='rgb(255, 255, 255)',
+            landcolor='rgb(217, 217, 217)',
+            subunitcolor='black'
+        ),
+        title=dict(
+            text="Promedio de tasa de muertes por drogas en EE.UU. (1999-2015)",
+            font=dict(color='black', size=20)
+        ),
+        font=dict(color='black', size=14),
+        paper_bgcolor='#f5f5f7',
+        plot_bgcolor='#f5f5f7'
+    )
 
-# Ajustar el diseño del gráfico para que coincida con el primero
-fig.update_layout(
-    margin=dict(l=0, r=0, t=40, b=0),
-    coloraxis_colorbar=dict(
-        title=dict(text='  ', font=dict(color='black')),
-        tickfont=dict(color='black'),
-        thickness=20,
-        len=0.75
-    ),
-    geo=dict(
-        lakecolor='rgb(255, 255, 255)',
-        landcolor='rgb(217, 217, 217)',
-        subunitcolor='black'
-    ),
-    title=dict(
-        text=f'Tasa de muertes por drogas en EE.UU. ({selected_year})',
-        font=dict(color='black', size=20)
-    ),
-    font=dict(color='black', size=14),
-    paper_bgcolor='#f5f5f7',
-    plot_bgcolor='#f5f5f7'
-)
+    st.plotly_chart(fig_avg, use_container_width=True)
 
-# Mostrar el gráfico anual en Streamlit
-st.plotly_chart(fig, use_container_width=True)
-
-# Diccionario de descripciones contextuales por año
-year_context = {
-    1999: {
-        "tendencia": "Inicio de la crisis de opioides recetados. Las tasas son relativamente bajas pero muestran disparidades regionales tempranas.",
-        "destacado": f"El estado con mayor tasa fue Nevada ({state_deaths.loc[state_deaths['DeathRate'].idxmax(), 'State']} con {max_value} muertes/100k).",
-        "eventos": "La FDA aprueba OxyContin en 1996, marcando el inicio de la epidemia de opioides."
-    },
-    2005: {
-        "tendencia": "Aumento acelerado en estados industriales. Las tasas superan por primera vez las 15 muertes/100k en varios estados.",
-        "destacado": f"West Virginia emerge como epicentro ({state_deaths.loc[state_deaths['State'] == 'West Virginia', 'DeathRate'].values[0]} muertes/100k).",
-        "eventos": "Primeras demandas contra Purdue Pharma por publicidad engañosa de OxyContin."
-    },
-    2010: {
-        "tendencia": "Pico de muertes por opioides recetados. La tasa nacional supera las 12 muertes/100k.",
-        "destacado": f"Kentucky lidera las tasas ({state_deaths.loc[state_deaths['State'] == 'Kentucky', 'DeathRate'].values[0]} muertes/100k).",
-        "eventos": "La DEA implementa el programa ARCOS para monitorear distribuidores farmacéuticos."
-    },
-    2015: {
-        "tendencia": "Transición a heroína y fentanilo sintético. Aumento del 72% en muertes desde 2010.",
-        "destacado": f"New Hampshire sufre el mayor incremento interanual (+31% desde 2014).",
-        "eventos": "El CDC publica nuevas guías para prescribir opioides (marzo 2016)."
-    }
-}
-
-# Función para obtener el contexto más cercano
-def get_closest_context(year):
-    closest_year = min(year_context.keys(), key=lambda x: abs(x - year))
-    return year_context[closest_year]
-
-# Obtener contexto para el año seleccionado
-context = get_closest_context(selected_year)
-
-# Descripción dinámica con estilo similar al mapa promedio
-st.markdown(f"""
-<div style='background-color: #f8f9fa; padding: 20px; border-left: 4px solid #6c757d; border-radius: 0 4px 4px 0; margin: 25px 0;'>
-    <h3 style='color: #2c3e50; margin-top: 0;'>Contexto en {selected_year}</h3>
-    
-    <div style='line-height: 1.6; font-size: 18px;'>
-        <p><strong>Tendencia nacional:</strong> {context["tendencia"]}</p>
-        <p><strong>Estado destacado:</strong> {context["destacado"]}</p>
-        <p><strong>Eventos clave:</strong> {context["eventos"]}</p>
+    st.markdown("""
+        <div style='background-color: #f8f9fa; padding: 15px; border-left: 4px solid #6c757d; border-radius: 0 4px 4px 0; margin: 20px 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif;'>
+            <h3 style='color: #2c3e50; margin-top: 0; font-size: 1.2rem;'>Análisis del promedio histórico</h3>
+            
+            <div style='line-height: 1.6; font-size: 16px; color: #333;'>
+                <p><strong>Tendencia nacional:</strong> El promedio nacional fue de {:.1f} muertes por cada 100,000 habitantes durante el período 1999-2015.</p>
+                <p><strong>Estado destacado:</strong> {} registró la tasa más alta con {} muertes/100k, mientras que {} tuvo la más baja con {}.</p>
+                <p><strong>Patrón geográfico:</strong> Los estados del noreste industrial y la región de los Apalaches muestran consistentemente las tasas más elevadas.</p>
+            </div>
+            
+            <div style='margin-top: 10px; font-size: 15px; color: #555; font-style: italic;'>
+                <strong>Dato relevante:</strong> La diferencia entre el estado con mayor y menor tasa fue de {} puntos, evidenciando disparidades regionales significativas.
+            </div>
+        </div>
         
-        <div style='margin-top: 15px; font-size: 16px; color: #555;'>
-            <i class="fas fa-lightbulb" style='color: #f39c12;'></i> <strong>Dato relevante:</strong> En {selected_year}, la tasa nacional fue de 
+        <div style='line-height: 1.6; font-size: 20px; margin-top: 20px;'>
+            <strong>Hallazgos clave:</strong>
+            <ul>
+                <li>El "Corredor de los Apalaches" (West Virginia, Kentucky, Ohio) muestra las tasas más altas consistentemente</li>
+                <li>Los estados con políticas más restrictivas (ej: Texas) no necesariamente presentan menores tasas</li>
+                <li>La distribución geográfica sugiere factores socioeconómicos subyacentes</li>
+            </ul>
+        </div>
+    </div>
+    """.format(
+        avg_data['DeathRate'].mean(),
+        avg_data.loc[avg_data['DeathRate'].idxmax(), 'State'],
+        avg_data['DeathRate'].max(),
+        avg_data.loc[avg_data['DeathRate'].idxmin(), 'State'],
+        avg_data['DeathRate'].min(),
+        avg_data['DeathRate'].max() - avg_data['DeathRate'].min()
+    ), unsafe_allow_html=True)
+
+# ================================
+# 📌 GRÁFICO 5: Mapa de Calor por Año (con selector y descripción mejorada)
+# ================================
+with st.container():
+    st.markdown("""
+    <div class="graph-card zoom-effect">
+        <div class="graph-title">📅 Evolución anual: Muertes por sobredosis por estado</div>
+        <div style='line-height: 1.6; font-size: 20px; margin-bottom: 20px;'>
+            Seleccione un año para visualizar cómo variaron las tasas de mortalidad entre estados. Este análisis temporal revela:
+        </div>
+    """, unsafe_allow_html=True)
+
+    # Crear un selector de año
+    selected_year = st.selectbox("Selecciona un año", sorted(data['Year'].unique()))
+
+    # Filtrar los datos para el año seleccionado
+    filtered_data = data[data['Year'] == selected_year]
+    state_deaths = filtered_data.groupby('State')['Deaths'].sum().reset_index()
+    pop_data = filtered_data.groupby('State')['Population'].mean().reset_index()
+    state_deaths = state_deaths.merge(pop_data, on='State', how='left')
+    state_deaths['DeathRate'] = (state_deaths['Deaths'] / state_deaths['Population']) * 100000
+    state_deaths['DeathRate'] = state_deaths['DeathRate'].round().astype(int)
+    state_deaths = state_deaths[state_deaths['State'] != 'United States']
+    max_value = state_deaths['DeathRate'].max()
+    state_deaths['StateCode'] = state_deaths['State'].map(state_abbr)
+
+    # Crear el mapa anual
+    fig = px.choropleth(
+        state_deaths,
+        locations='StateCode',
+        locationmode='USA-states',
+        color='DeathRate',
+        scope='usa',
+        color_continuous_scale='Greens',
+        range_color=[0, max_value],
+        title=f"Tasa anual de muertes por drogas en EE.UU. ({selected_year})",
+        hover_name='State',
+        labels={'DeathRate': 'Muertes por cada 100,000 habitantes'}
+    )
+
+    # Ajustar el diseño del gráfico
+    fig.update_layout(
+        margin=dict(l=0, r=0, t=40, b=0),
+        coloraxis_colorbar=dict(
+            title=dict(text='  ', font=dict(color='black')),
+            tickfont=dict(color='black'),
+            thickness=20,
+            len=0.75
+        ),
+        geo=dict(
+            lakecolor='rgb(255, 255, 255)',
+            landcolor='rgb(217, 217, 217)',
+            subunitcolor='black'
+        ),
+        title=dict(
+            text=f'Tasa de muertes por drogas en EE.UU. ({selected_year})',
+            font=dict(color='black', size=20)
+        ),
+        font=dict(color='black', size=14),
+        paper_bgcolor='#f5f5f7',
+        plot_bgcolor='#f5f5f7'
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+    # Diccionario de descripciones contextuales por año
+    year_context = {
+        1999: {
+            "tendencia": "Inicio de la crisis de opioides recetados. Las tasas son relativamente bajas pero muestran disparidades regionales tempranas.",
+            "destacado": f"El estado con mayor tasa fue {state_deaths.loc[state_deaths['DeathRate'].idxmax(), 'State']} con {max_value} muertes/100k.",
+            "eventos": "La FDA aprueba OxyContin en 1996, marcando el inicio de la epidemia de opioides."
+        },
+        2005: {
+            "tendencia": "Aumento acelerado en estados industriales. Las tasas superan por primera vez las 15 muertes/100k en varios estados.",
+            "destacado": f"West Virginia emerge como epicentro ({state_deaths.loc[state_deaths['State'] == 'West Virginia', 'DeathRate'].values[0]} muertes/100k).",
+            "eventos": "Primeras demandas contra Purdue Pharma por publicidad engañosa de OxyContin."
+        },
+        2010: {
+            "tendencia": "Pico de muertes por opioides recetados. La tasa nacional supera las 12 muertes/100k.",
+            "destacado": f"Kentucky lidera las tasas ({state_deaths.loc[state_deaths['State'] == 'Kentucky', 'DeathRate'].values[0]} muertes/100k).",
+            "eventos": "La DEA implementa el programa ARCOS para monitorear distribuidores farmacéuticos."
+        },
+        2015: {
+            "tendencia": "Transición a heroína y fentanilo sintético. Aumento del 72% en muertes desde 2010.",
+            "destacado": f"New Hampshire sufre el mayor incremento interanual (+31% desde 2014).",
+            "eventos": "El CDC publica nuevas guías para prescribir opioides (marzo 2016)."
+        }
+    }
+
+    # Función para obtener el contexto más cercano
+    def get_closest_context(year):
+        closest_year = min(year_context.keys(), key=lambda x: abs(x - year))
+        return year_context[closest_year]
+
+    # Obtener contexto para el año seleccionado
+    context = get_closest_context(selected_year)
+
+    # Descripción dinámica con IDÉNTICO estilo al mapa promedio
+    st.markdown(f"""
+    <div style='background-color: #f8f9fa; padding: 15px; border-left: 4px solid #6c757d; border-radius: 0 4px 4px 0; margin: 20px 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif;'>
+        <h3 style='color: #2c3e50; margin-top: 0; font-size: 1.2rem;'>Contexto en {selected_year}</h3>
+        
+        <div style='line-height: 1.6; font-size: 16px; color: #333;'>
+            <p><strong>Tendencia nacional:</strong> {context["tendencia"]}</p>
+            <p><strong>Estado destacado:</strong> {context["destacado"]}</p>
+            <p><strong>Eventos clave:</strong> {context["eventos"]}</p>
+        </div>
+        
+        <div style='margin-top: 10px; font-size: 15px; color: #555; font-style: italic;'>
+            <strong>Dato relevante:</strong> En {selected_year}, la tasa nacional fue de 
             {filtered_data[filtered_data['State'] == 'United States']['Deaths'].sum() / filtered_data[filtered_data['State'] == 'United States']['Population'].sum() * 100000:.1f} 
             muertes por 100,000 habitantes.
         </div>
     </div>
-</div>
+    """, unsafe_allow_html=True)
 
-<div style='line-height: 1.6; font-size: 20px; margin-top: 20px;'>
-    <strong>Análisis comparativo:</strong>
-    <ul>
-        <li>La crisis evolucionó desde opioides recetados (2000-2010) hacia heroína/fentanilo (post-2013)</li>
-        <li>Estados con políticas restrictivas mostraron menor efectividad que aquellos con enfoques preventivos</li>
-        <li>La variabilidad interanual refleja la efectividad de políticas locales</li>
-    </ul>
-    <p><em>Fuente: CDC Wonder Database - Elaboración propia</em></p>
-</div>
-</div>
-""", unsafe_allow_html=True)
+    st.markdown(f"""
+    <div style='line-height: 1.6; font-size: 20px; margin-top: 20px;'>
+        <strong>Análisis comparativo:</strong>
+        <ul>
+            <li>La crisis evolucionó desde opioides recetados (2000-2010) hacia heroína/fentanilo (post-2013)</li>
+            <li>Estados con políticas restrictivas mostraron menor efectividad que aquellos con enfoques preventivos</li>
+            <li>La variabilidad interanual refleja la efectividad de políticas locales</li>
+        </ul>
+        <p><em>Fuente: CDC Wonder Database - Elaboración propia</em></p>
+    </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # CONCLUSIONES
 with st.container():
@@ -502,3 +513,7 @@ st.markdown("""
     © 2025 NarcoImpact | Proyecto académico UPV | Grado en Ciencia de Datos | Todos los derechos reservados
 </div>
 """, unsafe_allow_html=True)
+  
+            
+  
+   
