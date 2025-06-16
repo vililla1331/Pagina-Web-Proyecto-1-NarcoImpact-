@@ -113,7 +113,7 @@ with st.container():
             Como se detalla en el Capítulo 3, este proyecto contribuye directamente a:
             </p>
             <ul style='font-size: 20px;'>
-                <li><strong>ODS 3 (Salud):</strong> Reducción del 60% en muertes por sobredosis en Suiza vs aumento del 400% en EE.UU.</li>
+                <li><strong>ODS 3 (Salud):</strong> Reducción del 60% en muertes por sobredosis en Suiza a comparación del aumento del 400% en EE.UU.</li>
                 <li><strong>ODS 16 (Justicia):</strong> Encarcelamiento 6-10 veces mayor para afroamericanos por delitos de drogas (Capítulo 2)</li>
                 <li><strong>ODS 11 (Ciudades):</strong> Programas suizos redujeron el crimen asociado en un 35% (Federal Office of Public Health, 2008)</li>
             </ul>
@@ -156,7 +156,7 @@ with st.container():
     st.image(img1, width=1100)
     st.markdown("""
     <div style='line-height: 1.6; font-size: 20px;'>
-        <p>Este gráfico muestra una tendencia alarmante: en <strong>EE.UU.</strong> las muertes por sobredosis han aumentado significativamente desde 2000, alcanzando más de 30 muertes por cada 100,000 habitantes en 2022.</p>
+        <p>El gráfico muestra una tendencia alarmante: en <strong>EE.UU.</strong> las muertes por sobredosis han aumentado significativamente desde 2000, alcanzando más de 30 muertes por cada 100,000 habitantes en 2022.</p>
         <p>En contraste, <strong>Suiza</strong> ha logrado mantener cifras estables y bajas gracias a la adopción de políticas de reducción de daños como salas de consumo supervisado y programas de tratamiento integral.</p>
         <p>Esto evidencia que la estrategia suiza ha sido más efectiva en reducir la mortalidad asociada al consumo de drogas.</p>
     </div>
@@ -174,7 +174,7 @@ with st.container():
     
     st.markdown("""
         <div style='line-height: 1.6; font-size: 20px;'>
-            <p>Este gráfico muestra la evolución de las tasas de drogadicción en Suiza tras la implementación de su política de <strong>Reducción de Daños</strong> (1994):</p>
+            <p>El gráfico muestra la evolución de las tasas de drogadicción en Suiza tras la implementación de su política de <strong>Reducción de Daños</strong> (1994):</p>
             <h4 style='color: #1d1d1f; margin-top: 15px;'>Tendencias clave:</h4>
             <ul>
                 <li><strong>Crisis de los 90s:</strong> Pico máximo coincidiendo con la epidemia de heroína.</li>
@@ -200,7 +200,7 @@ with st.container():
 
     st.markdown("""
     <div class="graph-card zoom-effect">
-        <div class="graph-title">⚖️ Muertes por drogadicción según género en EE.UU. y Suiza (1995-2023)</div>
+        <div class="graph-title">⚖️ Muertes por drogadicción en función del género en EE.UU. y Suiza (1995-2023)</div>
     """, unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
@@ -216,8 +216,9 @@ with st.container():
             <h4 style='color: #1d1d1f; margin-top: 15px;'>Hallazgos clave:</h4>
             <ol>
                 <li><strong>Diferencias de género en las muertes relacionadas con drogas:</strong><br>
-                    - Hombres: 74.1%<br>
-                    - Mujeres: 25.9%<br>
+                    - Tomando los datos obteenidos de los gráficos, y realizando la media:
+                    - El  68.15% de las muertes por drogadicción corresponden hombres <br>
+                    - El 31,85% de las muertes por drogadicción corresponden mujeres <br>
                     <em>Los datos reflejan una marcada disparidad en la mortalidad, posiblemente vinculada a patrones de consumo y acceso a tratamientos.</em>
                 </li>
                 <li style='margin-top: 10px;'><strong>Evolución temporal y tendencias:</strong><br>
@@ -314,9 +315,9 @@ with st.container():
     <div style='line-height: 1.6; font-size: 20px; margin-top: 20px;'>
         <strong>Hallazgos clave:</strong>
         <ul>
-            <li>El "Corredor de los Apalaches" (West Virginia, Kentucky, Ohio) muestra las tasas más altas consistentemente</li>
-            <li>Los estados con políticas más restrictivas (ej: Texas) no necesariamente presentan menores tasas</li>
-            <li>La distribución geográfica sugiere factores socioeconómicos subyacentes</li>
+          <li><strong>Altas tasas en el oeste montañoso:</strong> Estados como Nuevo México y Utah destacan por sus elevadas tasas, lo que sugiere desafíos en salud pública regional.</li>
+          <li><strong>Contrastes entre estados vecinos:</strong> Hay diferencias marcadas en la tasa de muertes entre estados contiguos, lo que indica desigualdades en políticas o acceso a tratamiento.</li>
+          <li><strong>Baja incidencia en el centro-norte:</strong> Estados como Dakota del Norte e Iowa presentan tasas bajas, posiblemente por menor exposición a factores de riesgo.</li>
         </ul>
     </div>
 </div>
@@ -330,7 +331,7 @@ with st.container():
     <div class="graph-card zoom-effect">
         <div class="graph-title">📅 Evolución anual: Muertes por sobredosis por estado</div>
         <div style='line-height: 1.6; font-size: 20px; margin-bottom: 20px;'>
-            Seleccione un año para visualizar cómo variaron las tasas de mortalidad entre estados. Este análisis temporal revela:
+            Seleccione un año para visualizar cómo variaron las tasas de mortalidad entre estados.
         </div>
     """, unsafe_allow_html=True)
 
@@ -394,12 +395,12 @@ with st.container():
     <div class="section">
         <h2 style='color: #1d1d1f; margin-bottom: 20px;'>📌 Conclusiones validadas</h2>
         <div style='line-height: 1.6; font-size: 20px'>
-            <p>Los resultados del Capítulo 7 confirman nuestra hipótesis inicial:</p>
             <ul>
-                <li><strong>Efectividad comprobada:</strong> Suiza redujo muertes en un 60% vs aumento del 400% en EE.UU. (1995-2020)</li>
-                <li><strong>Impacto económico:</strong> El modelo suizo cuesta un 23% menos por paciente/año que el encarcelamiento (Vokinger & Naci, 2022)</li>
-                <li><strong>Equidad:</strong> En EE.UU., los afroamericanos tienen 6-10x más probabilidades de ser encarcelados por delitos de drogas (Capítulo 2)</li>
+                  <li><strong>Las políticas punitivas en EE.UU. han demostrado ser ineficaces,</strong> especialmente en estados como Nuevo México, donde las tasas de muertes por drogas siguen siendo elevadas.</li>
+                  <li><strong>El enfoque de reducción de daños, aplicado en Suiza y Dakota del Norte, ha mostrado mejores resultados,</strong> priorizando la salud pública sobre la criminalización del consumo.</li>
+                <li><strong>El estudio promueve la necesidad de reformar las políticas antidrogas,</strong> adoptando estrategias basadas en evidencia y centradas en la minimización de daños, con supervisión adecuada.</li>
             </ul>
+
             <blockquote>"La evidencia es clara: tras 30 años de datos, la reducción de daños salva vidas, ahorra recursos y protege derechos humanos" (Conclusión, Capítulo 8)</blockquote>
         </div>
     </div>
