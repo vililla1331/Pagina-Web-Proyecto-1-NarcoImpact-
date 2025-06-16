@@ -216,13 +216,11 @@ with st.container():
             <h4 style='color: #1d1d1f; margin-top: 15px;'>Hallazgos clave:</h4>
             <ol>
                 <li><strong>Diferencias de género en las muertes relacionadas con drogas:</strong><br>
-                   <ul>
-                      <li> Tomando los datos obtenidos de los gráficos, y realizando la media: </li>
-                      <li>El 68,15 % de las muertes por drogadicción corresponden a hombres.</li>
-                      <li>El 31,85 % de las muertes por drogadicción corresponden a mujeres.</li>
-                  </ul>
-
-                  <em>Los datos reflejan una marcada disparidad en la mortalidad, posiblemente vinculada a patrones de consumo y acceso a tratamientos.</em>
+                       <ul>
+                          <li> Tomando los datos obtenidos de los gráficos, y realizando la media: </li>
+                          <li>El 68,15 % de las muertes por drogadicción corresponden a hombres.</li>
+                          <li>El 31,85 % de las muertes por drogadicción corresponden a mujeres.</li>
+                      </ul>
                 </li>
                 <li style='margin-top: 10px;'><strong>Evolución temporal y tendencias:</strong><br>
                     - Los hombres representan la mayoría de muertes en todas las décadas<br>
