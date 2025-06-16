@@ -401,9 +401,6 @@ with st.container():
                   <li><strong>El enfoque de reducción de daños, aplicado en Suiza y Dakota del Norte, ha mostrado mejores resultados,</strong> priorizando la salud pública sobre la criminalización del consumo.</li>
                 <li><strong>El estudio promueve la necesidad de reformar las políticas antidrogas,</strong> adoptando estrategias basadas en evidencia y centradas en la minimización de daños, con supervisión adecuada.</li>
             </ul>
-
-            <blockquote>"La evidencia es clara: tras 30 años de datos, la reducción de daños salva vidas, ahorra recursos y protege derechos humanos" (Conclusión, Capítulo 8)</blockquote>
-        </div>
     </div>
     """, unsafe_allow_html=True)
 
